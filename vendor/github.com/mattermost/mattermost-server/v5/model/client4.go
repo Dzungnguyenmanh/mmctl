@@ -361,10 +361,6 @@ func (c *Client4) GetCommandRoute(commandId string) string {
 	return fmt.Sprintf(c.GetCommandsRoute()+"/%v", commandId)
 }
 
-func (c *Client4) GetCommandMoveRoute(commandId string) string {
-	return fmt.Sprintf(c.GetCommandsRoute()+"/%v/move", commandId)
-}
-
 func (c *Client4) GetEmojisRoute() string {
 	return fmt.Sprintf("/emoji")
 }
@@ -4032,17 +4028,6 @@ func (c *Client4) UpdateCommand(cmd *Command) (*Command, *Response) {
 	return CommandFromJson(r.Body), BuildResponse(r)
 }
 
-// MoveCommand moves a command to a different team.
-func (c *Client4) MoveCommand(teamId string, commandId string) (bool, *Response) {
-	cmr := CommandMoveRequest{TeamId: teamId}
-	r, err := c.DoApiPut(c.GetCommandMoveRoute(commandId), cmr.ToJson())
-	if err != nil {
-		return false, BuildErrorResponse(r, err)
-	}
-	defer closeBody(r)
-	return CheckStatusOK(r), BuildResponse(r)
-}
-
 // DeleteCommand deletes a command based on the provided command id string.
 func (c *Client4) DeleteCommand(commandId string) (bool, *Response) {
 	r, err := c.DoApiDelete(c.GetCommandRoute(commandId))
@@ -4062,17 +4047,6 @@ func (c *Client4) ListCommands(teamId string, customOnly bool) ([]*Command, *Res
 	}
 	defer closeBody(r)
 	return CommandListFromJson(r.Body), BuildResponse(r)
-}
-
-// GetCommandById will retrieve a command by id.
-func (c *Client4) GetCommandById(cmdId string) (*Command, *Response) {
-	url := fmt.Sprintf("%s/%s", c.GetCommandsRoute(), cmdId)
-	r, err := c.DoApiGet(url, "")
-	if err != nil {
-		return nil, BuildErrorResponse(r, err)
-	}
-	defer closeBody(r)
-	return CommandFromJson(r.Body), BuildResponse(r)
 }
 
 // ExecuteCommand executes a given slash command.
@@ -4752,23 +4726,8 @@ func (c *Client4) ClearServerBusy() (bool, *Response) {
 	return CheckStatusOK(r), BuildResponse(r)
 }
 
-// GetServerBusy returns the current ServerBusyState including the time when a server marked busy
-// will automatically have the flag cleared.
-func (c *Client4) GetServerBusy() (*ServerBusyState, *Response) {
-	r, err := c.DoApiGet(c.GetServerBusyRoute(), "")
-	if err != nil {
-		return nil, BuildErrorResponse(r, err)
-	}
-	defer closeBody(r)
-
-	sbs := ServerBusyStateFromJson(r.Body)
-	return sbs, BuildResponse(r)
-}
-
 // GetServerBusyExpires returns the time when a server marked busy
 // will automatically have the flag cleared.
-//
-// Deprecated: Use GetServerBusy instead.
 func (c *Client4) GetServerBusyExpires() (*time.Time, *Response) {
 	r, err := c.DoApiGet(c.GetServerBusyRoute(), "")
 	if err != nil {
@@ -4926,23 +4885,4 @@ func (c *Client4) PatchConfig(config *Config) (*Config, *Response) {
 	}
 	defer closeBody(r)
 	return ConfigFromJson(r.Body), BuildResponse(r)
-}
-
-func (c *Client4) GetChannelModerations(channelID string, etag string) ([]*ChannelModeration, *Response) {
-	r, err := c.DoApiGet(c.GetChannelRoute(channelID)+"/moderations", etag)
-	if err != nil {
-		return nil, BuildErrorResponse(r, err)
-	}
-	defer closeBody(r)
-	return ChannelModerationsFromJson(r.Body), BuildResponse(r)
-}
-
-func (c *Client4) PatchChannelModerations(channelID string, patch []*ChannelModerationPatch) ([]*ChannelModeration, *Response) {
-	payload, _ := json.Marshal(patch)
-	r, err := c.DoApiPut(c.GetChannelRoute(channelID)+"/moderations/patch", string(payload))
-	if err != nil {
-		return nil, BuildErrorResponse(r, err)
-	}
-	defer closeBody(r)
-	return ChannelModerationsFromJson(r.Body), BuildResponse(r)
 }

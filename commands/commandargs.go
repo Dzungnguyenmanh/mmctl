@@ -6,9 +6,9 @@ package commands
 import (
 	"strings"
 
-	"github.com/mattermost/mmctl/client"
+	"github.com/dzungnguyenmanh/mmctl/client"
 
-	"github.com/mattermost/mattermost-server/v5/model"
+	"github.com/dzungnguyenmanh/model"
 )
 
 // getCommandFromCommandArg retrieves a Command by command id or team:trigger.
