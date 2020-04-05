@@ -9,10 +9,10 @@ import (
 	"os"
 	"strings"
 
+	"github.com/dzungnguyenmanh/model"
 	"github.com/golang/mock/gomock"
-	"github.com/mattermost/mattermost-server/v5/model"
 
-	"github.com/mattermost/mmctl/printer"
+	"github.com/dzungnguyenmanh/mmctl/printer"
 
 	"github.com/spf13/cobra"
 )

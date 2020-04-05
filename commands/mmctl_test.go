@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mattermost/mmctl/mocks"
-	"github.com/mattermost/mmctl/printer"
+	"github.com/dzungnguyenmanh/mmctl/mocks"
+	"github.com/dzungnguyenmanh/mmctl/printer"
 
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/suite"

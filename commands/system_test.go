@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/mattermost/mattermost-server/v5/model"
+	"github.com/dzungnguyenmanh/model"
 
-	"github.com/mattermost/mmctl/printer"
+	"github.com/dzungnguyenmanh/mmctl/printer"
 
 	"github.com/spf13/cobra"
 )

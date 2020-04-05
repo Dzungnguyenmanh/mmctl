@@ -2,7 +2,7 @@
 GO_PACKAGES=$(shell go list ./...)
 GO ?= $(shell command -v go 2> /dev/null)
 BUILD_HASH ?= $(shell git rev-parse HEAD)
-BUILD_VERSION ?= $(shell git ls-remote --tags --refs git://github.com/mattermost/mmctl | tail -n1 | sed 's/.*\///')
+BUILD_VERSION ?= $(shell git ls-remote --tags --refs git://github.com/dzungnguyemanh/mmctl | tail -n1 | sed 's/.*\///')
 # Needed to avoid install shadow in brew which is not permitted
 ADVANCED_VET ?= TRUE
 
@@ -62,12 +62,12 @@ ifeq ($(ADVANCED_VET), TRUE)
 
 	@echo Running golangci-lint
 	golangci-lint run ./...
-	@if ! [ -x "$$(command -v mattermost-govet)" ]; then \
-		echo "mattermost-govet is not installed. Please install it executing \"GO111MODULE=off go get -u github.com/mattermost/mattermost-govet\""; \
+	@if ! [ -x "$$(command -v mokoo-govet)" ]; then \
+		echo "mokoos-govet is not installed. Please install it executing \"GO111MODULE=off go get -u github.com/dzungnguyenmanh/mokoo-govet\""; \
 		exit 1; \
 	fi;
-	@echo Running mattermost-govet
-	$(GO) vet -vettool=$(GOPATH)/bin/mattermost-govet -license -structuredLogging -inconsistentReceiverName -tFatal -equalLenAsserts ./...
+	@echo Running mokoo-govet
+	$(GO) vet -vettool=$(GOPATH)/bin/mokoo-govet -license -structuredLogging -inconsistentReceiverName -tFatal -equalLenAsserts ./...
 endif
 	@echo Govet success
 
@@ -96,7 +96,7 @@ vendor:
 	go mod tidy
 
 mocks:
-	mockgen -destination=mocks/client_mock.go -copyright_file=mocks/copyright.txt -package=mocks github.com/mattermost/mmctl/client Client
+	mockgen -destination=mocks/client_mock.go -copyright_file=mocks/copyright.txt -package=mocks github.com/dzungnguyemanh/mmctl/client Client
 
 docs:
 	rm -rf docs
