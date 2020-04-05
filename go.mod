@@ -1,4 +1,4 @@
-module github.com/dzungnguyen/mmctl
+module github.com/dzungnguyenmanh/mmctl
 
 go 1.13
 
