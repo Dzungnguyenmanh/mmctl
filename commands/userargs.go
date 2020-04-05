@@ -7,9 +7,9 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/mattermost/mattermost-server/v5/model"
+	"github.com/dzungnguyenmanh/model"
 
-	"github.com/mattermost/mmctl/client"
+	"github.com/dzungnguyenmanh/mmctl/client"
 )
 
 func getUsersFromUserArgs(c client.Client, userArgs []string) []*model.User {

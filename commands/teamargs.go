@@ -4,9 +4,9 @@
 package commands
 
 import (
-	"github.com/mattermost/mattermost-server/v5/model"
+	"github.com/dzungnguyenmanh/model"
 
-	"github.com/mattermost/mmctl/client"
+	"github.com/dzungnguyenmanh/mmctl/client"
 )
 
 func getTeamsFromTeamArgs(c client.Client, teamArgs []string) []*model.Team {
